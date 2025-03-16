@@ -55,7 +55,9 @@ function onReady() {
                         hour12: false
                     });
 
+                    addDisabledButtonBeforeElement(eventEntryFormFieldIds.startDate, dateFormatter.format(startDate));
                     updateEventEntryFormFieldValue(eventEntryFormFieldIds.startDate, dateFormatter.format(startDate));
+                    addDisabledButtonBeforeElement(eventEntryFormFieldIds.endDate, dateFormatter.format(endDate));
                     updateEventEntryFormFieldValue(eventEntryFormFieldIds.endDate, dateFormatter.format(endDate));
                     updateEventEntryFormFieldValue(eventEntryFormFieldIds.startTime, timeFormatter.format(startDate));
                     updateEventEntryFormFieldValue(eventEntryFormFieldIds.endTime, timeFormatter.format(endDate));
@@ -82,7 +84,12 @@ if (document.referrer === 'https://www.meetup.com/') {
 
 function updateEventEntryFormFieldValue(elementId, value) {
     const fieldElement = document.getElementById(elementId);
-    fieldElement.value = value;
+    if (fieldElement instanceof HTMLInputElement) {
+        console.log(1)
+        Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(fieldElement, value);
+    } else {
+        fieldElement.value = value;
+    }
 
     fieldElement.setSelectionRange(0, 0); // Reset cursor position
     ['input', 'change', 'blur', 'focusout'].forEach(eventType => {
@@ -120,4 +127,13 @@ function addOutlineAnimation() {
 
     // Append the style element to the document head
     document.head.appendChild(styleElement);
+}
+
+function addDisabledButtonBeforeElement(elementId, buttonText) {
+    const updateButton = document.createElement('button');
+    updateButton.classList.add('button', 'button-medium', 'button-outline-weak', 'hidden', 'sm:inline-block');
+    updateButton.innerHTML = buttonText;
+    updateButton.disabled = true;
+    document.getElementById(elementId).parentElement.prepend(updateButton);
+
 }
