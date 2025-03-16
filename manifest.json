@@ -1,10 +1,37 @@
 {
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
+  "name": "Meetup.com → Proton Calendar",
+  "description": "Add \"Add to calendar\"-button to meetup.com for Proton Calendar.",
   "version": "1.0",
   "manifest_version": 3,
+  "icons": {
+    "16": "icons/extension_icon16.png",
+    "32": "icons/extension_icon32.png",
+    "48": "icons/extension_icon48.png",
+    "128": "icons/extension_icon128.png"
+  },
   "action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
-  }
+    "default_popup": "popup.html",
+    "default_icon": "icons/extension_icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "contentScriptMeetupCom.js"
+      ],
+      "matches": [
+        "https://www.meetup.com/*/events/*"
+      ]
+    },
+    {
+      "js": [
+        "contentScriptProtonCalendar.js"
+      ],
+      "matches": [
+        "https://calendar.proton.me/u/0/*"
+      ]
+    }
+  ]
 }

@@ -2,9 +2,10 @@
   "name": "Meetup.com-Proton-Calendar",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "private": true
+  "main": "popup.js",
+  "scripts": {},
+  "private": true,
+  "devDependencies": {
+    "chrome-types": "^0.1.345"
+  }
 }
