@@ -18,6 +18,7 @@ function onReady() {
         protonNewEventButton.classList.add('outline-animated');
 
         protonNewEventButton.addEventListener('click', () => {
+
             protonNewEventButton.classList.remove('outline-animated');
 
             chrome.storage.local.get('meetupEventInfos', function (item) {
@@ -64,19 +65,21 @@ function onReady() {
 
                     setTimeout(() => {
                         chrome.storage.local.remove('meetupEventInfos');
-                    }, 2000)
+                    }, 2000);
+
                 }, 1000);
 
             });
-        })
 
-    }, 2000)
+        });
+
+    }, 2000);
 
 }
 
 if (document.referrer === 'https://www.meetup.com/') {
     if (document.readyState !== "loading") {
-        onReady(); // Or setTimeout(onReady, 0); if you want it consistently async
+        onReady();
     } else {
         document.addEventListener("DOMContentLoaded", onReady);
     }
@@ -84,20 +87,22 @@ if (document.referrer === 'https://www.meetup.com/') {
 
 function updateEventEntryFormFieldValue(elementId, value) {
     const fieldElement = document.getElementById(elementId);
+
     if (fieldElement instanceof HTMLInputElement) {
-        console.log(1)
         Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(fieldElement, value);
     } else {
         fieldElement.value = value;
     }
 
     fieldElement.setSelectionRange(0, 0); // Reset cursor position
+
     ['input', 'change', 'blur', 'focusout'].forEach(eventType => {
         fieldElement.dispatchEvent(new Event(eventType, { bubbles: true, composed: true }));
     });
 }
 
 function convertDateStringToDateObject(dateString) {
+    // Basic formatting for dates like: 20250326T170000
     const formattedString = dateString.replace(
         /(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})/,
         "$1-$2-$3T$4:$5:$6"
@@ -123,7 +128,7 @@ function addOutlineAnimation() {
         outline-offset: 7px;
       }
     }
-  `;
+    `;
 
     // Append the style element to the document head
     document.head.appendChild(styleElement);
@@ -135,5 +140,4 @@ function addDisabledButtonBeforeElement(elementId, buttonText) {
     updateButton.innerHTML = buttonText;
     updateButton.disabled = true;
     document.getElementById(elementId).parentElement.prepend(updateButton);
-
 }
