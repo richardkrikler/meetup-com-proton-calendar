@@ -1,6 +1,6 @@
 {
-  "name": "Meetup.com-Proton-Calendar",
-  "version": "1.0.0",
+  "name": "meetup-com-proton-calendar",
+  "version": "0.1.0",
   "description": "",
   "main": "popup.js",
   "scripts": {},
